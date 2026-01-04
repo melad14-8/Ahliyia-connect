@@ -1,0 +1,321 @@
+/* ========== الأنماط الأساسية والمشتركة ========== */
+
+/* عمل ريست (Reset) لجميع العناصر لإزالة الهوامش الافتراضية وضبط طريقة حساب الأحجام */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* يضمن أن الحشوة والحدود لا تزيد من عرض العنصر */
+}
+
+/* تعريف المتغيرات (CSS Variables) لتسهيل تغيير الألوان والتنسيقات في كامل الموقع من مكان واحد */
+:root {
+    --primary: #631111;               /* اللون العنابي الأساسي */
+    --primary-dark: #4a0d0d;          /* درجة أغمق من العنابي */
+    --secondary: #8c1d1d;             /* أحمر غني للتدرجات */
+    --light: #fdf9f9;                 /* أبيض مائل للدفء */
+    --dark: #2b2b2b;                  /* رمادي غامق جداً للنصوص */
+    --gray: #7a7575;                  /* رمادي باهت */
+    --light-gray: #f0e9e9;            /* لون خلفية فاتح */
+    --border-radius: 12px;            /* استدارة الزوايا الموحدة */
+    --box-shadow: 0 10px 15px -3px rgba(99, 17, 17, 0.15), 0 4px 6px -2px rgba(99, 17, 17, 0.1); /* تأثير الظل */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* سرعة ونوع الحركة التفاعلية */
+    --gradient: linear-gradient(135deg, var(--primary), var(--secondary)); /* التدرج اللوني الأساسي */
+}
+
+/* تنسيق جسم الصفحة */
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; /* تحديد الخطوط */
+    line-height: 1.6; /* المسافة بين الأسطر */
+    color: var(--dark); /* لون النص */
+    background: linear-gradient(135deg, #fefdfd 0%, #f8f0f0 100%); /* خلفية متدرجة خفيفة */
+    min-height: 100vh; /* جعل الصفحة تأخذ كامل ارتفاع الشاشة على الأقل */
+    position: relative;
+    overflow-x: hidden; /* منع التمرير الأفقي */
+}
+
+/* تنسيق الحاوية الرئيسية لتوسيط المحتوى */
+.container {
+    width: 90%;
+    max-width: 1200px; /* أقصى عرض للحاوية */
+    margin: 0 auto; /* توسيط الحاوية في المنتصف */
+    padding: 0 15px;
+}
+
+/* تنسيق العناوين من h1 إلى h6 */
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--primary); /* تلوين العناوين باللون العنابي الأساسي */
+}
+
+/* تنسيق الفقرات النصية */
+p {
+    margin-bottom: 1rem;
+    color: #555252; /* لون رمادي أنعم قليلاً من الأسود */
+}
+
+/* ========== تنسيق الأزرار ========== */
+
+/* القاعدة الأساسية لجميع الأزرار */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 50px; /* جعل الأزرار بيضاوية الشكل */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: var(--transition);
+    box-shadow: var(--box-shadow);
+}
+
+/* زر النوع الأساسي (Primary) */
+.btn-primary {
+    background: var(--gradient); /* تطبيق التدرج اللوني */
+    color: white;
+    box-shadow: 0 4px 14px 0 rgba(99, 17, 17, 0.35);
+}
+
+/* تأثير مرور الماوس على الزر الأساسي */
+.btn-primary:hover {
+    transform: translateY(-3px); /* رفعه للأعلى قليلاً */
+    box-shadow: 0 6px 20px rgba(99, 17, 17, 0.45); /* زيادة قوة الظل */
+}
+
+/* ========== شريط التنقل (Navbar) ========== */
+
+.navbar {
+    background: rgba(253, 249, 249, 0.95); /* لون خلفية شفاف قليلاً */
+    backdrop-filter: blur(10px); /* تأثير ضبابي (Glassmorphism) */
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(99, 17, 17, 0.08);
+    padding: 15px 0;
+    position: sticky; /* جعل الشريط يلتصق في الأعلى عند التمرير */
+    top: 0;
+    z-index: 1000; /* لضمان ظهوره فوق باقي العناصر */
+    border-bottom: 1px solid rgba(99, 17, 17, 0.1);
+}
+
+/* توزيع محتويات شريط التنقل */
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* تنسيق الشعار (Logo) */
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text; /* جعل التدرج اللوني داخل النص فقط */
+    -webkit-text-fill-color: transparent; /* إخفاء لون النص الأصلي لإظهار التدرج */
+    background-clip: text;
+}
+
+/* تنسيق قائمة الروابط */
+.nav-links {
+    display: flex;
+    gap: 25px; /* المسافة بين الروابط */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 50px;
+    transition: var(--transition);
+}
+
+/* تأثير الرابط النشط أو عند مرور الماوس */
+.nav-links a.active,
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+/* ========== صفحات تسجيل الدخول (Auth) ========== */
+
+/* الحاوية الكبيرة لنموذج التسجيل */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px 0;
+}
+
+/* الصندوق الأبيض الذي يحتوي على النموذج */
+.auth-box {
+    background: white;
+    padding: 50px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 550px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(99, 17, 17, 0.08);
+}
+
+/* شريط ملون في أعلى صندوق التسجيل */
+.auth-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: var(--gradient);
+}
+
+/* تنسيق الجزء العلوي داخل الصندوق */
+.auth-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.auth-header h2 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    color: var(--primary);
+}
+
+.auth-header p {
+    color: var(--gray);
+    font-size: 1.1rem;
+}
+
+/* تنسيق مجموعة الحقل الواحد (Label + Input) */
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* تنسيق الأيقونات داخل الحقول */
+.form-group i {
+    color: var(--primary);
+    width: 20px;
+    text-align: center;
+}
+
+/* تنسيق خانات الإدخال (Inputs) */
+.form-group input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #eae6e6;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: var(--transition);
+    background: #fdfcfc;
+    color: var(--dark);
+}
+
+/* تأثير التركيز (Focus) عند الضغط داخل خانة الإدخال */
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary); /* تغيير لون الحدود للعنابي */
+    background: white;
+    box-shadow: 0 0 0 4px rgba(99, 17, 17, 0.12); /* إضافة توهج خفيف حول الحقل */
+}
+
+/* رفع الملفات (File Upload) */
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* تنسيق الزر الوهمي لرفع الملفات */
+.file-label {
+    background: #f5f0f0;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gray);
+    min-width: 180px;
+    justify-content: center;
+    border: 1px dashed var(--primary); /* حدود مقطعة */
+}
+
+.file-label:hover {
+    background: #f0e8e8;
+    color: var(--primary);
+}
+
+/* نص اسم الملف المرفوع */
+#fileName {
+    color: var(--gray);
+    font-style: italic;
+}
+
+/* روابط التحويل بين تسجيل الدخول وإنشاء الحساب */
+.auth-link {
+    text-align: center;
+    margin-top: 25px;
+    color: var(--gray);
+}
+
+.auth-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* ========== تذييل الصفحة (Footer) ========== */
+footer {
+    background: var(--primary); /* اللون العنابي */
+    color: white;
+    padding: 30px 0;
+    margin-top: 60px;
+}
+
+/* إجبار كافة النصوص داخل الفوتر لتكون باللون الأبيض */
+footer,
+footer * {
+    color: white !important;
+}
+
+.footer-bottom {
+    text-align: center;
+}
+
+/* ========== التصميم المتجاوب (Responsive) ========== */
+
+/* تعديلات للشاشات التي يقل عرضها عن 768 بكسل (الجوالات) */
+@media (max-width: 768px) {
+    .auth-box {
+        padding: 30px 25px; /* تقليل الحشوة الداخلية */
+    }
+    .file-upload {
+        flex-direction: column; /* جعل حقل الرفع عمودياً */
+        align-items: flex-start;
+    }
+    .file-label {
+        width: 100%; /* جعل الزر يأخذ كامل العرض */
+    }
+}

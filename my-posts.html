@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Posts - Ahlyia connect</title>
+    <link rel="stylesheet" href="css/my-posts.css"></head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">Ahlyia connect</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="feed.html">Feed</a>
+                <a href="create-post.html">Create Post</a>
+                <a href="my-posts.html" class="active">My Posts</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>My Posts</h1>
+        <p>Manage your published posts</p>
+        <div class="posts-container">
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-author">
+                        <div class="post-author-avatar">s</div>
+                        sameh tqatqa
+                    </div>
+                    <div class="post-date">May 10, 2025</div>
+                </div>
+                <div class="post-content">
+                    <p> أ:سامح طقاطقة <br>علاماتكم في مشروع المساق تقدر ب 20 درجة </p>
+                </div>
+            </div>
+        </div>
+    </main>
+<br>
+<div id="postsContainer">
+    </div>
+
+<div id="postsContainer"></div>
+
+ <script>
+    // انتظار تحميل الصفحة بالكامل قبل تنفيذ أي كود
+    document.addEventListener('DOMContentLoaded', function() {
+        renderPosts(); // استدعاء دالة عرض المنشورات عند فتح الصفحة
+    });
+
+    // ==============================
+    // دالة عرض المنشورات
+    // ==============================
+    function renderPosts() {
+        // ربط عنصر الحاوية التي ستعرض فيها المنشورات
+        const postsContainer = document.getElementById('postsContainer');
+
+        // جلب المنشورات من LocalStorage أو إنشاء مصفوفة فارغة إذا لا توجد
+        const savedPosts = JSON.parse(localStorage.getItem('all_posts')) || [];
+
+        // التحقق إذا لم توجد منشورات
+        if (savedPosts.length === 0) {
+            postsContainer.innerHTML = '<p style="text-align:center; padding:20px; color: var(--gray);">No posts to show yet.</p>';
+            return; // الخروج من الدالة
+        }
+
+        // تفريغ الحاوية قبل عرض المنشورات الجديدة
+        postsContainer.innerHTML = ''; 
+
+        // التكرار على كل منشور وعرضه
+        savedPosts.forEach((post) => {
+            // إنشاء عنصر div لكل منشور
+            const postCard = document.createElement('div');
+            postCard.className = 'post-card'; // إضافة الكلاس للتنسيق
+            postCard.setAttribute('data-id', post.id); // إضافة معرف المنشور كـ attribute
+
+            // ==============================
+            // 1. التحقق من وجود صورة بالمنشور
+            // ==============================
+            let imageSection = '';
+            if (post.image) {
+                imageSection = `
+                    <div class="post-image-container">
+                        <img src="${post.image}" class="post-image" alt="Post content">
+                    </div>
+                `;
+            }
+
+            // ==============================
+            // 2. بناء الهيكل الكامل للمنشور
+            // ==============================
+            postCard.innerHTML = `
+                <div class="post-header">
+                    <div class="user-info">
+                        <div class="post-author-avatar">A</div>
+                        <div>
+                            <span class="author-name">Student User</span>
+                            <small class="post-date">${post.date}</small>
+                        </div>
+                    </div>
+                    <!-- زر حذف المنشور -->
+                    <button onclick="deletePost(${post.id})" class="btn-delete" title="Delete Post">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+
+                <!-- نص المنشور -->
+                <div class="post-content">
+                    <p>${post.text}</p>
+                </div>
+                
+                <!-- عرض الصورة إذا وجدت -->
+                ${imageSection}
+                
+                <!-- أزرار التفاعل -->
+                <div class="post-footer">
+                    <button class="btn-action">
+                        <i class="far fa-thumbs-up"></i> Like
+                    </button>
+                    <button class="btn-action">
+                        <i class="far fa-comment"></i> Comment
+                    </button>
+                </div>
+            `;
+
+            // إضافة المنشور إلى الحاوية
+            postsContainer.appendChild(postCard);
+        });
+    }
+
+    // ==============================
+    // دالة حذف المنشور
+    // ==============================
+    function deletePost(postId) {
+        // التأكد من رغبة المستخدم بالحذف
+        if (confirm('Are you sure you want to delete this post?')) {
+
+            // 1️⃣ حذف المنشور من الفيد العام
+            let allPosts = JSON.parse(localStorage.getItem('all_posts')) || [];
+            allPosts = allPosts.filter(post => post.id !== postId); // تصفية المنشورات
+            localStorage.setItem('all_posts', JSON.stringify(allPosts)); // حفظ التحديثات
+
+            // 2️⃣ حذف المنشور من المنشورات الشخصية للحفاظ على التزامن
+            let personalPosts = JSON.parse(localStorage.getItem('personal_posts')) || [];
+            personalPosts = personalPosts.filter(post => post.id !== postId);
+            localStorage.setItem('personal_posts', JSON.stringify(personalPosts));
+
+            // إعادة عرض المنشورات بعد الحذف
+            renderPosts();
+        }
+    }
+</script>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Ahlyia connect. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+</body>
+</html>

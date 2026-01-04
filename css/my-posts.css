@@ -1,0 +1,464 @@
+/* ========== المتغيرات العامة (Global Variables) ========== */
+:root {
+    --primary: #631111;               /* اللون الأساسي (عنابي داكن) */
+    --primary-dark: #4a0d0d;          /* درجة أغمق من العنابي للعمق */
+    --secondary: #8c1d1d;             /* أحمر غني للتدرجات اللونية */
+    --light: #fdf9f9;                 /* خلفية بيضاء مائلة للدفء */
+    --dark: #2b2b2b;                  /* رمادي داكن جداً للنصوص */
+    --gray: #7a7575;                  /* رمادي باهت للنصوص الثانوية */
+    --light-gray: #f0e9e9;            /* لون رمادي فاتح جداً للخلفيات */
+    --border-radius: 12px;            /* مقدار انحناء الزوايا الافتراضي */
+    --box-shadow: 0 10px 15px -3px rgba(99, 17, 17, 0.15), 0 4px 6px -2px rgba(99, 17, 17, 0.1); /* الظل الافتراضي للعناصر */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* سرعة ونوع الحركة التفاعلية */
+    --gradient: linear-gradient(135deg, var(--primary), var(--secondary)); /* تدرج لوني مائل */
+}
+
+/* ========== تنسيق جسم الصفحة الأساسي ========== */
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; /* نوع الخط المستخدم */
+    line-height: 1.6;                 /* المسافة بين الأسطر */
+    color: var(--dark);               /* لون النص الأساسي */
+    background: linear-gradient(135deg, #fefdfd 0%, #f8f0f0 100%); /* تدرج خلفية الصفحة */
+    min-height: 100vh;                /* جعل طول الصفحة لا يقل عن طول الشاشة */
+    position: relative;               /* لتحديد المواقع بالنسبة للجسم */
+    overflow-x: hidden;               /* منع ظهور شريط التمرير الأفقي */
+}
+
+/* ملاحظة: يوجد تعريف ثانٍ لـ body سيتم دمجه مع السابق */
+body { font-family: Arial, sans-serif; background-color: #f0f2f5; margin: 0; }
+
+/* ========== الحاويات والتخطيط (Layout) ========== */
+.container { 
+    max-width: 700px;                 /* أقصى عرض للحاوية */
+    margin: 0 auto;                  /* توسيط الحاوية في المنتصف */
+    padding: 20px;                   /* مسافة داخلية */
+}
+
+.navbar { 
+    background: #007bff;              /* لون خلفية شريط التنقل */
+    padding: 15px;                    /* مسافة داخلية للبار */
+    color: white;                     /* لون النص أبيض */
+    display: flex;                    /* استخدام نظام الـ flex لتوزيع العناصر */
+    justify-content: space-between;   /* توزيع العناصر على الأطراف */
+}
+
+.navbar a { 
+    color: white;                     /* لون روابط التنقل */
+    text-decoration: none;            /* إزالة الخط تحت الرابط */
+    margin-left: 15px;                /* مسافة بين الروابط */
+}
+
+/* ========== ترويسة الصفحة (Feed Header) ========== */
+.feed-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+
+.btn-create { 
+    background: #28a745;              /* لون زر الإنشاء (أخضر) */
+    color: white; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    text-decoration: none; 
+}
+
+/* ========== بطاقة المنشور (Post Card) - النسخة الأولى ========== */
+.post-card { 
+    background: white; 
+    border-radius: 8px; 
+    padding: 15px; 
+    margin-bottom: 20px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+}
+
+.post-header { 
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 15px; 
+}
+
+.avatar { 
+    width: 40px; 
+    height: 40px; 
+    background: #ddd; 
+    border-radius: 50%;               /* جعل الصورة دائرية */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin-right: 10px; 
+}
+
+.username { font-weight: bold; display: block; }
+.post-date { font-size: 0.8rem; color: gray; }
+
+.post-content { font-size: 1.1rem; line-height: 1.5; margin-bottom: 15px; }
+.post-image img { 
+    width: 100%;                      /* جعل الصورة تأخذ كامل عرض البطاقة */
+    border-radius: 8px; 
+    margin-bottom: 10px; 
+}
+
+.post-footer { 
+    border-top: 1px solid #eee;       /* خط فاصل علوي */
+    padding-top: 10px; 
+    display: flex; 
+    gap: 20px;                        /* مسافة بين أزرار التفاعل */
+}
+
+.action-btn { 
+    background: none; 
+    border: none; 
+    color: #65676b; 
+    cursor: pointer; 
+    font-weight: bold; 
+}
+
+.action-btn:hover { color: #007bff; } /* تغيير اللون عند تمرير الماوس */
+
+/* ========== حاوية العرض الأكبر ========== */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* ========== العناوين والفقرات ========== */
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--primary);            /* تلوين العناوين باللون الأساسي العنابي */
+}
+
+p {
+    margin-bottom: 1rem;
+    color: #555252;                   /* لون رمادي دافئ للفقرات */
+}
+
+/* ========== الأزرار (Buttons) ========== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 50px;              /* شكل بيضاوي للأزرار */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: var(--transition);
+    box-shadow: var(--box-shadow);
+}
+
+.btn-primary {
+    background: var(--gradient);      /* تدرج لوني عنابي */
+    color: white;
+    box-shadow: 0 4px 14px 0 rgba(99, 17, 17, 0.35);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);      /* رفع الزر للأعلى قليلاً عند التمرير */
+    box-shadow: 0 6px 20px rgba(99, 17, 17, 0.45);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* ========== شريط الملاحة المتطور (Advanced Navbar) ========== */
+.navbar {
+    background: rgba(253, 249, 249, 0.95); /* خلفية شفافة قليلاً */
+    backdrop-filter: blur(10px);           /* تأثير الضباب للخلفية */
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(99, 17, 17, 0.08);
+    padding: 15px 0;
+    position: sticky;                      /* جعل البار ثابت في أعلى الصفحة عند التمرير */
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(99, 17, 17, 0.1);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text;         /* جعل التدرج اللوني داخل النص فقط */
+    -webkit-text-fill-color: transparent;  /* تفريغ لون النص الأصلي */
+    background-clip: text;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 50px;
+    transition: var(--transition);
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    color: var(--primary);            /* تغيير اللون عند الوقوف على الرابط أو كونه نشطاً */
+}
+
+/* ========== قسم المنشورات (Posts Container) ========== */
+.posts-container {
+    display: flex;
+    flex-direction: column;           /* ترتيب المنشورات عمودياً */
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.post-card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 25px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(99, 17, 17, 0.08);
+}
+
+/* الخط الملون في جانب البطاقة */
+.post-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;                       /* سمك الخط */
+    height: 100%;
+    background: var(--gradient);      /* لون التدرج العنابي */
+}
+
+.post-card:hover {
+    transform: translateY(-5px);      /* حركة ارتفاع بسيطة عند التمرير */
+    box-shadow: 0 20px 25px -5px rgba(99, 17, 17, 0.15);
+}
+
+/* ========== تفاصيل داخل المنشور ========== */
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.post-author {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.post-author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient);
+    color: white;
+    font-weight: 600;
+}
+
+.post-date {
+    color: var(--gray);
+    font-size: 0.95rem;
+}
+
+.post-content {
+    margin-bottom: 20px;
+    line-height: 1.7;
+    color: #555252;
+    font-size: 1.05rem;
+}
+
+.post-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;               /* الحفاظ على أبعاد الصورة وقص الزائد */
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(99, 17, 17, 0.1);
+}
+
+/* ========== التذييل (Footer) ========== */
+footer {
+    background: var(--primary);       /* اللون العنابي لخلفية التذييل */
+    color: white; 
+    padding: 30px 0;
+    margin-top: 60px;
+}
+
+footer * {
+    color: inherit;                   /* جعل جميع العناصر داخل الفوتر ترث اللون الأبيض */
+}
+
+.footer-bottom {
+    text-align: center;
+    color: white;
+}
+
+/* ========== أزرار إضافية وتأثيرات ========== */
+.btn-delete:hover {
+    color: #cc0000 !important;        /* تغيير اللون للأحمر عند الحذف */
+    transform: scale(1.1);            /* تكبير الأيقونة قليلاً */
+    transition: 0.2s;
+}
+
+.btn-action:hover {
+    color: #3b5998 !important;        /* تغيير اللون للأزرق عند التفاعل */
+}
+
+/* ========== جعل الفوتر في أسفل الصفحة دائماً ========== */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    flex: 1;                          /* يجعل المحتوى الأساسي يأخذ كل المساحة المتاحة ويدفع الفوتر للأسفل */
+}
+
+footer {
+    background-color: #631111;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+    border-top: 1px solid #631111;
+}
+
+/* ========== تنسيقات بطاقة المنشور الدقيقة ========== */
+.post-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.user-info {
+    display: flex;
+    gap: 10px;
+}
+
+.post-author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.author-name {
+    font-weight: bold;
+    display: block;
+}
+
+.post-date {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+/* زر الحذف المخصص */
+.btn-delete {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+}
+
+/* تنسيق النصوص الطويلة داخل المنشور */
+.post-content p {
+    white-space: pre-wrap;            /* يحافظ على المسافات والأسطر الجديدة */
+    word-wrap: break-word;            /* كسر الكلمات الطويلة جداً لكي لا تخرج عن الإطار */
+}
+
+/* ========== تذييل المنشور (Likes/Comments) ========== */
+.post-footer {
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn-action {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.btn-action:hover {
+    color: #1da1f2;                   /* تغيير اللون لأزرق تويتر عند الوقوف عليه */
+}
+
+/* ========== صفحة التغذية الإخبارية (Feed Page) ========== */
+.feed-container {
+    max-width: 680px;                 /* عرض مريح للقراءة والتصفح */
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 50px;
+}
+
+/* تنسيق متقدم لصورة المنشور لمنع تشويه الواجهة */
+.post-image-container {
+    width: calc(100% + 40px);         /* تمدد الصورة لتلغي الحواف الداخلية للبطاقة */
+    margin: 0 -20px 15px -20px;
+    background: #f8f0f0;
+    border-top: 1px solid rgba(99, 17, 17, 0.05);
+    border-bottom: 1px solid rgba(99, 17, 17, 0.05);
+    display: flex;
+    justify-content: center;
+}
+
+.post-image-container img {
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: contain;              /* إظهار الصورة كاملة دون قص أجزاء منها */
+    display: block;
+}

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post - Ahlyia</title>
+    <link rel="stylesheet" href="css/create-post.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <!-- الكود يسمح للمستخدم أن:
+
+يكتب منشور
+
+يختار صورة
+
+يشوف معاينة للصورة قبل النشر
+
+يحذف الصورة إذا بدو
+
+ينشر المنشور مع الصورة
+
+يتم حفظ المنشور في localStorage باستخدام Base64
+-->
+</head>
+
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">Ahlyia connect</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="feed.html">Feed</a>
+                <a href="create-post.html" class="active">Create Post</a>
+                <a href="my-posts.html">My Posts</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>Create a New Post</h1>
+        <p>Share your thoughts, resources, or questions with the community</p>
+        
+        <form class="post-form" id="mainPostForm">
+            <div class="form-group">
+                <label for="postContent"><i class="fas fa-pen"></i> What's on your mind?</label>
+                <textarea id="postContent" rows="5" placeholder="Write your post content here..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="postImage"><i class="fas fa-image"></i> Add Photo (Optional)</label>
+                <div class="file-upload">
+                    <input type="file" id="postImage" accept="image/*" style="display:none;">
+                    <label for="postImage" class="file-label" style="cursor: pointer;">
+                        <i class="fas fa-cloud-upload-alt"></i> Choose an image
+                    </label>
+                    <span id="imageFileName">No file chosen</span>
+                </div>
+                <div id="imagePreview" class="image-preview"></div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Publish Post</button>
+                <a href="feed.html" class="btn btn-outline">Cancel</a>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Ahlyia connect. All rights reserved.</p>
+        </div>
+    </footer>
+
+ <script>
+    // ربط الفورم المسؤول عن نشر المنشور
+    const postForm = document.getElementById('mainPostForm');
+
+    // ربط حقل كتابة نص المنشور
+    const postContent = document.getElementById('postContent');
+
+    // ربط input اختيار الصورة
+    const postImage = document.getElementById('postImage');
+
+    // عنصر عرض اسم الصورة المختارة
+    const imageFileName = document.getElementById('imageFileName');
+
+    // عنصر عرض معاينة الصورة
+    const imagePreview = document.getElementById('imagePreview');
+
+    // متغير لتخزين الصورة بعد تحويلها إلى Base64
+    let base64Image = null;
+
+    // ==============================
+    // 1. معالجة اختيار الصورة
+    // ==============================
+
+    // إضافة حدث عند اختيار صورة
+    postImage.addEventListener('change', function() {
+
+        // أخذ أول ملف تم اختياره
+        const file = this.files[0];
+        
+        // التأكد أن المستخدم اختار ملف
+        if (file) {
+
+            // عرض اسم الملف المختار
+            imageFileName.textContent = file.name;
+
+            // إنشاء كائن FileReader لقراءة الملف
+            const reader = new FileReader();
+            
+            // ما يحدث بعد الانتهاء من قراءة الصورة
+            reader.onload = function(e) {
+
+                // تخزين الصورة بصيغة Base64
+                base64Image = e.target.result;
+                
+                // عرض معاينة الصورة داخل الصفحة
+                imagePreview.innerHTML = `
+                    <div style="position: relative; display: inline-block; margin-top: 15px;">
+                        
+                        <!-- عرض الصورة -->
+                        <img src="${base64Image}" alt="Preview" 
+                             style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid #ddd;">
+                        
+                        <!-- زر حذف الصورة -->
+                        <button type="button" id="removeImage" 
+                                style="position: absolute; top: 5px; right: 5px; 
+                                background: rgba(255,0,0,0.7); color: white; 
+                                border: none; border-radius: 50%; 
+                                width: 25px; height: 25px; cursor: pointer;">
+                            &times;
+                        </button>
+                    </div>
+                `;
+
+                // إضافة حدث لزر حذف الصورة
+                document.getElementById('removeImage').addEventListener('click', function() {
+
+                    // حذف بيانات الصورة
+                    base64Image = null;
+
+                    // إزالة المعاينة
+                    imagePreview.innerHTML = "";
+
+                    // إعادة النص الافتراضي لاسم الملف
+                    imageFileName.textContent = "No file chosen";
+
+                    // تفريغ input اختيار الصورة
+                    postImage.value = "";
+                });
+            };
+
+            // قراءة الصورة وتحويلها إلى Base64
+            reader.readAsDataURL(file);
+
+        } else {
+            // في حال لم يتم اختيار ملف
+            imageFileName.textContent = "No file chosen";
+            imagePreview.innerHTML = "";
+            base64Image = null;
+        }
+    });
+
+    // ==============================
+    // 2. معالجة نشر المنشور
+    // ==============================
+
+    // إضافة حدث عند إرسال الفورم
+    postForm.addEventListener('submit', function(e) {
+
+        // منع إعادة تحميل الصفحة
+        e.preventDefault(); 
+
+        // أخذ نص المنشور مع حذف الفراغات
+        const content = postContent.value.trim();
+
+        // التحقق أن النص غير فارغ
+        if (!content) {
+            alert("Please write something first!");
+            return; // إيقاف التنفيذ
+        }
+
+        // إنشاء كائن يمثل المنشور الجديد
+        const newPost = {
+            id: Date.now(), // ID فريد باستخدام الوقت
+            text: content, // نص المنشور
+            date: new Date().toLocaleString(), // تاريخ النشر
+            image: base64Image // الصورة بصيغة Base64
+        };
+
+        try {
+            // ==============================
+            // حفظ المنشور في الفيد العام
+            // ==============================
+
+            // جلب جميع المنشورات أو إنشاء مصفوفة جديدة
+            let allPosts = JSON.parse(localStorage.getItem('all_posts')) || [];
+
+            // إضافة المنشور الجديد في بداية المصفوفة
+            allPosts.unshift(newPost);
+
+            // حفظ البيانات مرة أخرى في LocalStorage
+            localStorage.setItem('all_posts', JSON.stringify(allPosts));
+
+            // ==============================
+            // حفظ المنشور في منشوراتي الشخصية
+            // ==============================
+
+            // جلب المنشورات الشخصية
+            let myPersonalPosts = JSON.parse(localStorage.getItem('personal_posts')) || [];
+
+            // إضافة المنشور الجديد في البداية
+            myPersonalPosts.unshift(newPost);
+
+            // حفظها في LocalStorage
+            localStorage.setItem('personal_posts', JSON.stringify(myPersonalPosts));
+
+            // رسالة نجاح
+            alert('Done! Your post is now live.');
+
+            // الانتقال إلى صفحة الفيد
+            window.location.href = 'feed.html';
+
+        } catch (error) {
+            // في حال حدوث خطأ في التخزين
+            console.error("Error saving post:", error);
+
+            // تنبيه المستخدم
+            alert("Storage might be full (Base64 images take a lot of space). Try a smaller image.");
+        }
+    });
+</script>
+</body>
+</html>
+</body>
+</html>

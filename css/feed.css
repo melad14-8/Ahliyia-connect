@@ -1,0 +1,322 @@
+/* ========== التنسيقات الأساسية والعامة ========== */
+
+/* تصفير الهوامش والبادئات لضمان تناسق العرض في جميع المتصفحات */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* تعريف المتغيرات العامة (الألوان، الحواف، الظلال) لسهولة استخدامها وتعديلها */
+:root {
+    --primary: #631111;                /* اللون العنابي الأساسي */
+    --primary-dark: #4a0d0d;           /* درجة أغمق للعمق */
+    --secondary: #8c1d1d;              /* لون أحمر غني للتدرجات */
+    --light: #fdf9f9;                  /* لون خلفية أبيض مائل للدفء */
+    --dark: #2b2b2b;                   /* رمادي داكن للنصوص */
+    --gray: #7a7575;                   /* رمادي باهت للنصوص الثانوية */
+    --light-gray: #f0e9e9;             /* درجة رمادي فاتحة جداً */
+    --border-radius: 12px;             /* زوايا العناصر المنحنية */
+    --box-shadow: 0 10px 15px -3px rgba(99, 17, 17, 0.15), 0 4px 6px -2px rgba(99, 17, 17, 0.1); /* ظل ناعم */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* تأثير الحركة عند التفاعل */
+    --gradient: linear-gradient(135deg, var(--primary), var(--secondary)); /* تدرج لوني */
+}
+
+/* تنسيق جسم الصفحة: الخطوط، الخلفية، والحد الأدنى للطول */
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: var(--dark);
+    background: linear-gradient(135deg, #fefdfd 0%, #f8f0f0 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column; /* لجعل المحتوى والفوتر مرتبين عمودياً */
+}
+
+/* حاوية المحتوى الرئيسية لضمان عدم تمدد النص بشكل مفرط وتوسيطه */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* تنسيق العناوين (H1-H6) بلون العلامة التجارية ووزن خط عريض */
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--primary);
+}
+
+/* تنسيق الفقرات النصية */
+p {
+    margin-bottom: 1rem;
+    color: #555252;
+}
+
+/* ========== تنسيق الأزرار ========== */
+
+/* التصميم الأساسي المشترك لجميع الأزرار */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: var(--box-shadow);
+}
+
+/* زر بلون أساسي متدرج */
+.btn-primary {
+    background: var(--gradient);
+    color: white;
+    box-shadow: 0 4px 14px 0 rgba(99, 17, 17, 0.35);
+}
+
+/* تأثير عند تمرير الماوس فوق الزر الأساسي (يرتفع قليلاً) */
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(99, 17, 17, 0.45);
+}
+
+/* زر بحدود خارجية فقط (شفاف) */
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+/* تأثير التحويم للزر الشفاف (يمتلئ باللون) */
+.btn-outline:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* ========== شريط التنقل (Navbar) ========== */
+
+/* تنسيق شريط التنقل العلوي مع تأثير الزجاج المضبب (Glassmorphism) */
+.navbar {
+    background: rgba(253, 249, 249, 0.95);
+    backdrop-filter: blur(10px); /* ضبابية خلفية الشريط */
+    box-shadow: 0 4px 12px rgba(99, 17, 17, 0.08);
+    padding: 15px 0;
+    position: sticky; /* يظل ثابتاً في أعلى الصفحة عند التمرير */
+    top: 0;
+    z-index: 1000;
+}
+
+/* توزيع العناصر داخل شريط التنقل */
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* تنسيق الشعار (Logo) مع نص ملون بتدرج */
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text; /* قص الخلفية لتظهر داخل النص فقط */
+    -webkit-text-fill-color: transparent;
+}
+
+/* روابط التنقل */
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 50px;
+    transition: var(--transition);
+}
+
+/* تغيير لون الرابط عند النشاط أو التحويم */
+.nav-links a.active,
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+/* ========== بطاقات المنشورات (Posts) ========== */
+
+/* حاوية تجمع المنشورات فوق بعضها بفراغات متساوية */
+.posts-container, .feed-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 680px;
+    margin: 20px auto;
+}
+
+/* تنسيق بطاقة المنشور الفردية */
+.post-card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 25px;
+    transition: var(--transition);
+    position: relative;
+    /*شيء يبقى "محبوساً" داخل حدود الصندوق المستديرة.*/
+    overflow: hidden;
+    border: 1px solid rgba(99, 17, 17, 0.08);
+}
+
+/* شريط جانبي جمالي ملون لكل بطاقة */
+.post-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--gradient);
+}
+
+/* تأثير بسيط عند تمرير الماوس فوق بطاقة المنشور */
+.post-card:hover {
+    transform: translateY(-5px);
+}
+
+/* الجزء العلوي من المنشور (بيانات الكاتب والتاريخ) */
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* حاوية صورة واسم الكاتب */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* دائرة صورة المستخدم الشخصية (Avatar) */
+.post-author-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--gradient);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* اسم كاتب المنشور */
+.author-name {
+    font-weight: 700;
+    color: var(--dark);
+    display: block;
+}
+
+/* تاريخ النشر */
+.post-date {
+    color: var(--gray);
+    font-size: 0.85rem;
+}
+
+/* زر حذف المنشور */
+.btn-delete {
+    background: #fff5f5;
+    border: none;
+    color: #e53e3e;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-delete:hover {
+    background: #e53e3e;
+    color: white;
+}
+
+/* محتوى النص داخل المنشور */
+.post-content p {
+    white-space: pre-wrap; /* يحافظ على الفراغات والأسطر الجديدة */
+    word-wrap: break-word; /* كسر الكلمات الطويلة جداً لعدم تخريب التصميم */
+    line-height: 1.7;
+    color: #4a4a4a;
+    font-size: 1.05rem;
+}
+
+/* حاوية الصورة داخل المنشور لضبط أبعادها */
+.post-image-container {
+    width: calc(100% + 50px); /* التمدد لملء عرض البطاقة بالكامل */
+    margin: 15px -25px;
+    background: #f8f0f0;
+    display: flex;
+    justify-content: center;
+}
+
+.post-image-container img {
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: contain; /* عرض الصورة كاملة دون قص */
+}
+
+/* تذييل المنشور (أزرار التفاعل) */
+.post-footer {
+    display: flex;
+    gap: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--light-gray);
+}
+
+/* أزرار الإعجاب والتعليق */
+.btn-action {
+    background: transparent;
+    border: none;
+    color: var(--gray);
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+}
+
+.btn-action:hover {
+    background: var(--light-gray);
+    color: var(--primary);
+}
+
+/* ========== تذييل الصفحة (Footer) ========== */
+
+footer {
+    background: var(--primary);
+    color: white;
+    padding: 30px 0;
+    margin-top: auto; /* يدفع الفوتر للأسفل في حال كان المحتوى قليلاً */
+    text-align: center;
+    width: 100%;
+}
+
+/* جعل المحتوى الأساسي يأخذ المساحة المتاحة */
+main {
+    flex: 1;
+}

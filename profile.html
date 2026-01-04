@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Ahlyia connect</title>
+    <link rel="stylesheet" href="css/profile.css">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo"> Ahlyia connect</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="feed.html">Feed</a>
+                <a href="create-post.html">Create Post</a>
+                <a href="my-posts.html">My Posts</a>
+                <a href="profile.html" class="active">Profile</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="profile-header">
+            <div class="profile-avatar-container">
+                <img id="profileAvatar" >
+                <div class="avatar-overlay" onclick="document.getElementById('avatarUpload').click()">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <input type="file" id="avatarUpload" accept="image/*" style="display:none;" onchange="previewAvatar(event)">
+            </div>
+            <div class="profile-info">
+                <h1>khaled </h1>
+                <p class="profile-email">khaled tomy@university.edu</p>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span>1</span>
+                        <p>Posts</p>
+                    </div>
+                    <div class="stat">
+                        <span>May 2025</span>
+                        <p>Member Since</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-content">
+            <div class="profile-section">
+                <h2>Account Information</h2>
+                <div class="profile-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Full Name</span>
+                        <span class="detail-value">khaled tomy</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Email Address</span>
+                        <span class="detail-value"> khaled.Ahlyia @university.edu</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Joined  Ahlyia connect</span>
+                        <span class="detail-value">May 2025</span>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <button class="btn btn-outline" onclick="alert('Logged out.'); window.location='login.html'">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025  Ahlyia connect. All rights reserved.</p>
+        </div>
+    </footer>
+
+<script>
+    // دالة عرض معاينة صورة الأفاتار قبل رفعها
+    function previewAvatar(event) {
+
+        // أخذ أول ملف تم اختياره من input
+        const file = event.target.files[0];
+
+        // التحقق أن المستخدم اختار ملف
+        if (file) {
+
+            // إنشاء كائن FileReader لقراءة الملف
+            const reader = new FileReader();
+
+            // عند الانتهاء من قراءة الملف
+            reader.onload = function(e) {
+                // تغيير صورة الأفاتار في الصفحة إلى الصورة المختارة
+                document.getElementById('profileAvatar').src = e.target.result;
+            };
+
+            // تحويل الصورة إلى Base64 لتتمكن من عرضها مباشرة
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+</body>
+</html>

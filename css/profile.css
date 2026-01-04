@@ -1,0 +1,308 @@
+/* ========== الأنماط الأساسية والمشتركة (Base & Shared Styles) ========== */
+* {
+    margin: 0;          /* إزالة الهوامش الخارجية الافتراضية لجميع العناصر */
+    padding: 0;         /* إزالة الحواف الداخلية الافتراضية لجميع العناصر */
+    box-sizing: border-box; /* التأكد من أن الحواف والبطانة جزء من عرض العنصر الكلي */
+}
+
+:root {
+    /* تعريف متغيرات الألوان لاستخدامها بسهولة في كامل الملف */
+    --primary: #631111;              /* اللون العنابي الداكن الأساسي */
+    --primary-dark: #4a0d0d;         /* درجة أغمق من العنابي */
+    --secondary: #8c1d1d;            /* أحمر غني للتدرجات اللوني */
+    --light: #fdf9f9;                /* أبيض مائل للدفء */
+    --dark: #2b2b2b;                 /* رمادي غامق جداً (بديل للأسود الصريح) */
+    --gray: #7a7575;                 /* رمادي متوسط للنصوص الفرعية */
+    --light-gray: #f0e9e9;           /* خلفية رمادية فاتحة جداً */
+    --border-radius: 12px;           /* زوايا منحنية موحدة */
+    --box-shadow: 0 10px 15px -3px rgba(99, 17, 17, 0.15), 0 4px 6px -2px rgba(99, 17, 17, 0.1); /* ظلال ناعمة */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* تأثير انتقالي سلس للحركات */
+    --gradient: linear-gradient(135deg, var(--primary), var(--secondary)); /* تدرج لوني مائل */
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; /* نوع الخط المستخدم */
+    line-height: 1.6;               /* المسافة بين السطور */
+    color: var(--dark);             /* لون النص الأساسي */
+    background: linear-gradient(135deg, #fefdfd 0%, #f8f0f0 100%); /* خلفية متدرجة خفيفة */
+    min-height: 100vh;              /* ضمان أن الصفحة تأخذ كامل ارتفاع الشاشة */
+    position: relative;
+    overflow-x: hidden;             /* منع ظهور شريط التمرير الأفقي */
+}
+
+.container {
+    width: 90%;                     /* عرض المحتوى ليكون متناسباً مع الشاشة */
+    max-width: 1200px;              /* أقصى عرض مسموح به للمحتوى */
+    margin: 0 auto;                 /* توسيط المحتوى في منتصف الصفحة */
+    padding: 0 15px;                /* مسافة داخلية من اليمين واليسار */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1rem;            /* مسافة أسفل العناوين */
+    font-weight: 700;               /* جعل العناوين عريضة */
+    line-height: 1.2;
+    color: var(--primary);          /* تلوين العناوين باللون الأساسي */
+}
+
+p {
+    margin-bottom: 1rem;            /* مسافة أسفل الفقرات */
+    color: #555252;                 /* لون رمادي غامق للنصوص الطويلة */
+}
+
+/* ========== الأزرار (Buttons) ========== */
+.btn {
+    display: inline-flex;           /* عرض الأيقونات والنص بجانب بعضهما */
+    align-items: center;            /* توسيط المحتوى عمودياً */
+    justify-content: center;        /* توسيط المحتوى أفقياً */
+    padding: 12px 28px;             /* حجم الزر */
+    border: none;
+    border-radius: 50px;            /* زوايا دائرية بالكامل */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;                /* تغيير شكل الماوس عند الوقوف على الزر */
+    text-decoration: none;          /* إزالة الخط السفلي إذا كان الزر رابطاً */
+    transition: var(--transition);  /* إضافة تأثير الانتقال عند التفاعل */
+    box-shadow: var(--box-shadow);
+}
+
+.btn-primary {
+    background: var(--gradient);    /* خلفية متدرجة للزر */
+    color: white;                   /* نص أبيض */
+    box-shadow: 0 4px 14px 0 rgba(99, 17, 17, 0.35); /* ظل خاص بالزر الأساسي */
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);    /* رفع الزر قليلاً للأعلى عند مرور الماوس */
+    box-shadow: 0 6px 20px rgba(99, 17, 17, 0.45); /* زيادة قوة الظل عند الوقوف عليه */
+}
+
+.btn-outline {
+    background: transparent;        /* خلفية شفافة */
+    border: 2px solid var(--primary); /* إطار بلون أساسي */
+    color: var(--primary);          /* نص بلون أساسي */
+}
+
+.btn-outline:hover {
+    background: var(--primary);     /* ملء الخلفية عند مرور الماوس */
+    color: white;                   /* تحويل النص للأبيض */
+    transform: translateY(-3px);
+}
+
+/* ========== شريط التنقل (Navigation) ========== */
+.navbar {
+    background: rgba(253, 249, 249, 0.95); /* خلفية بيضاء شفافة قليلاً */
+    backdrop-filter: blur(10px);    /* تأثير تغبيش (Glassmorphism) خلف الشريط */
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(99, 17, 17, 0.08); /* ظل بسيط أسفل الشريط */
+    padding: 15px 0;
+    position: sticky;               /* تثبيت الشريط في أعلى الصفحة عند التمرير */
+    top: 0;
+    z-index: 1000;                  /* ضمان ظهور الشريط فوق جميع العناصر */
+    border-bottom: 1px solid rgba(99, 17, 17, 0.1);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between; /* توزيع الشعار والروابط على الأطراف */
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: var(--gradient);    /* تلوين النص بتدرج */
+    -webkit-background-clip: text;  /* حصر التدرج داخل النص فقط */
+    -webkit-text-fill-color: transparent; /* جعل لون النص الأصلي شفافاً لإظهار التدرج */
+    background-clip: text;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;                      /* مسافة بين روابط التنقل */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 50px;
+    transition: var(--transition);
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    color: var(--primary);          /* تلوين الرابط عند الوقوف عليه أو تفعيله */
+}
+
+/* ========== صفحة الملف الشخصي (Profile Page) ========== */
+.profile-header {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    flex-wrap: wrap;                /* السماح للعناصر بالنزول لسطر جديد في الشاشات الصغيرة */
+}
+
+.profile-avatar-container {
+    width: 150px;
+    height: 150px;
+    position: relative;             /* لتمكين وضع عناصر فوق الصورة (مثل أيقونة الرفع) */
+    flex-shrink: 0;                 /* منع تقلص حجم الصورة */
+}
+
+#profileAvatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;             /* جعل الصورة دائرية */
+    object-fit: cover;              /* الحفاظ على أبعاد الصورة دون تمطيطها */
+    border: 4px solid white;        /* إطار أبيض حول الصورة */
+    box-shadow: var(--box-shadow);
+}
+
+.avatar-overlay {
+    position: absolute;             /* وضع الطبقة فوق الصورة تماماً */
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(99, 17, 17, 0.8); /* خلفية داكنة شفافة تظهر عند التمرير */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;                     /* إخفاء الطبقة افتراضياً */
+    transition: var(--transition);
+    cursor: pointer;
+    color: white;
+    font-size: 1.5rem;
+    z-index: 2;
+}
+
+.profile-avatar-container:hover .avatar-overlay {
+    opacity: 1;                     /* إظهار الطبقة عند مرور الماوس على الصورة */
+}
+
+#avatarUpload {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;                     /* إخفاء زر الرفع الأصلي مع الحفاظ على وظيفته */
+    cursor: pointer;
+    z-index: 3;
+}
+
+.profile-info {
+    flex: 1;                        /* أخذ المساحة المتبقية بجانب الصورة */
+    min-width: 250px;
+}
+
+#profileName {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    color: var(--primary);
+}
+
+.profile-email {
+    color: var(--gray);
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 30px;                      /* المسافة بين الإحصائيات (مثل عدد المتابعين) */
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat span {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+}
+
+.profile-content {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 40px;
+    margin-bottom: 40px;
+    border: 1px solid rgba(99, 17, 17, 0.08); /* إطار خفيف جداً */
+}
+
+.profile-section h2 {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0e9e9; /* خط فاصل أسفل عنوان القسم */
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;         /* ترتيب البيانات عمودياً */
+    gap: 20px;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between; /* وضع العنوان في جهة والقيمة في الجهة الأخرى */
+    padding: 15px 0;
+    border-bottom: 1px solid #f0e9e9;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: var(--gray);
+    min-width: 180px;
+}
+
+.detail-value {
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.profile-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;      /* وضع أزرار الأكشن في أقصى اليمين */
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+/* ========== التذييل (Footer) ========== */
+footer {
+    background: var(--primary);     /* خلفية باللون العنابي */
+    color: white;
+    padding: 30px 0;
+    margin-top: 60px;
+}
+
+/* إجبار جميع النصوص داخل التذييل على اللون الأبيض */
+footer,
+footer * {
+    color: white !important;
+}
+
+.footer-bottom {
+    text-align: center;             /* توسيط نص حقوق النشر */
+    color: white;
+}
+
+/* ========== التصميم المتجاوب (Responsive) ========== */
+@media (max-width: 768px) {
+    /* تنسيقات خاصة بالهواتف والأجهزة اللوحية */
+    .profile-header {
+        flex-direction: column;     /* جعل العناصر تحت بعضها */
+        text-align: center;         /* توسيط النصوص */
+    }
+    .profile-actions {
+        justify-content: center;    /* توسيط الأزرار */
+        flex-direction: column;     /* جعل الأزرار تأخذ العرض الكامل تحت بعضها */
+    }
+    .profile-content {
+        padding: 30px 20px;         /* تقليل الهوامش الداخلية في الشاشات الصغيرة */
+    }
+}
